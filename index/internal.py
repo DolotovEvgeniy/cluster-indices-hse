@@ -82,7 +82,7 @@ def nw(points, clusters_idx):
 	
 ########################################################
 
-def dunn(norm, points, clusters_idx):
+def dunn(points, clusters_idx, norm = euclidian_dist):
 	clusters = splitClusters(points, clusters_idx)
 	if len(clusters) == 1:
 		return 0
@@ -92,7 +92,7 @@ def dunn(norm, points, clusters_idx):
 	return separation/cohesion
 
 
-def calinski_harabasz(norm, points, clusters_idx):
+def calinski_harabasz(points, clusters_idx, norm = euclidian_dist):
 	clusters = splitClusters(points, clusters_idx)
 	if len(clusters) == 1:
 		return 0
@@ -112,13 +112,13 @@ def calinski_harabasz(norm, points, clusters_idx):
 	return ((N-K)/float(K-1))*(separation/cohesion)
 
 
-def gamma(norm, points, clusters_idx):
+def gamma(points, clusters_idx, norm = euclidian_dist):
 	if len(set(clusters_idx)) == 1:
 		return float('inf')
 	return dl(norm, points, clusters_idx)/float(nw(points, clusters_idx)*(pairCount(points)-nw(points, clusters_idx)))
 
 
-def c_index(norm, points, clusters_idx):
+def c_index(points, clusters_idx, norm = euclidian_dist):
 	clusters = splitClusters(points, clusters_idx)
 	s = 0
 	for cluster in clusters:
@@ -139,7 +139,7 @@ def c_index(norm, points, clusters_idx):
 	return (s-s_min)/float(s_max-s_min)
 
 
-def davies_bouldin(norm, points, clusters_idx):
+def davies_bouldin(points, clusters_idx, norm = euclidian_dist):
 	clusters = splitClusters(points, clusters_idx)
 	centers = []
 	for cluster in clusters:
@@ -186,7 +186,7 @@ def b(norm, point, cluster_num, points, clusters_idx):
 	return min_value
 
 
-def silhouette(norm, points, clusters_idx):
+def silhouette(points, clusters_idx, norm = euclidian_dist):
 	clusters = splitClusters(points, clusters_idx)
 	sum_result = 0
 	for i, cluster in enumerate(clusters):
@@ -198,7 +198,7 @@ def silhouette(norm, points, clusters_idx):
 
 ########## CS #############
 
-def cs_index(norm, points, clusters_idx):
+def cs_index(points, clusters_idx, norm = euclidian_dist):
 	clusters = splitClusters(points, clusters_idx)
 	cohesion = 0
 	for cluster in clusters:
@@ -250,12 +250,12 @@ def wcd(norm, points, clusters_idx):
 		result_sum += value
 	return result_sum
 
-def score_function(norm, points, clusters_idx):
+def score_function(points, clusters_idx, norm = euclidian_dist):
 	return 1-1/exp(bcd(norm, points, clusters_idx)+wcd(norm, points, clusters_idx))
 
 
 ####### cop ##########
-def cop(norm, points, clusters_idx):
+def cop(points, clusters_idx, norm = euclidian_dist):
 	clusters = splitClusters(points, clusters_idx)
 	N = len(points)
 	result_sum = 0
@@ -275,7 +275,7 @@ def cop(norm, points, clusters_idx):
 					 
 ######### sv ###########
 
-def sv(norm, points, clusters_idx):
+def sv(points, clusters_idx, norm = euclidian_dist):
 	clusters = splitClusters(points, clusters_idx)
 	centers = []
 	for cluster in clusters:
